@@ -1,0 +1,177 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block layout %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>Subjects</h3>
+
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSubjectModal">
+            <i class="fi fi-rr-plus"></i> Add Subject
+        </button>
+    </div>
+
+    <hr>
+
+    <!-- FLASH MESSAGES -->
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow-sm">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Abr</th>
+
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for s in subjects %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ s.code }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.short_name }}</td>
+
+
+
+                    {% if request.school_type == "secondary" %}
+                        <td>
+                            {% if s.is_optional %}
+                                <span class="badge bg-warning">Yes</span>
+                            {% else %}
+                                <span class="badge bg-secondary">No</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if s.is_subsidiary %}
+                                <span class="badge bg-info">Yes</span>
+                            {% else %}
+                                <span class="badge bg-secondary">No</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ s.number_of_papers }}</td>
+                    {% endif %}
+
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editSubjectModal{{ s.id }}">
+                            Edit
+                        </button>
+
+                        <button class="btn btn-sm btn-outline-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteSubjectModal{{ s.id }}">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- ========================= -->
+                <!-- EDIT SUBJECT MODAL       -->
+                <!-- ========================= -->
+                <div class="modal fade" id="editSubjectModal{{ s.id }}">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                      <form method="POST" action="{% url 'profile:edit_subject' s.id %}">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Subject</h5>
+                            <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            {{ s.form.as_p }}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ========================= -->
+                <!-- DELETE SUBJECT MODAL     -->
+                <!-- ========================= -->
+                <div class="modal fade" id="deleteSubjectModal{{ s.id }}">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete Subject</h5>
+                            <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete:</p>
+                            <strong>{{ s.name }} ({{ s.code }})</strong>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a href="{% url 'profile:delete_subject' s.id %}" class="btn btn-danger">
+                                Delete
+                            </a>
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted">No subjects added yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- ADD SUBJECT MODAL        -->
+<!-- ========================= -->
+<div class="modal fade" id="addSubjectModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <form method="POST" action="{% url 'profile:add_subject' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+            <h5 class="modal-title">Add Subject</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            {{ form.as_p }}
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary">Add Subject</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

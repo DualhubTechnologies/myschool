@@ -1,0 +1,187 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- begin::SchoolSys Meta Basic -->
+<meta charset="utf-8">
+<meta name="theme-color" content="#316AFF">
+<meta name="robots" content="index, follow">
+<meta name="author" content="SchoolSys Team">
+<meta name="format-detection" content="telephone=no">
+
+<meta name="keywords" content="
+SchoolSys, School Management System Uganda, School ERP, Multi-user School Platform,
+Education SaaS, Student Management, Teacher Management, Academic Calendar,
+Fees Management, School Administration Software, Ugandan Schools, Modern School ERP
+">
+
+<meta name="description" content="
+SchoolSys is a modern multi-user School Management System built for Ugandan schools.
+It provides tools for academics, administration, calendars, school profiles, finance,
+attendance, communication, and reporting — all in one powerful dashboard.
+">
+<!-- end::SchoolSys Meta Basic -->
+
+<!-- begin::SchoolSys Meta Social -->
+<meta property="og:url" content="https://schoolsys.com/">
+<meta property="og:site_name" content="SchoolSys | School Management System">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_UG">
+<meta property="og:title" content="SchoolSys | Multi-user School Management System">
+<meta property="og:description" content="
+A comprehensive school management platform for Uganda — manage students, staff,
+academics, finance, communication, and reporting with ease.
+">
+<meta property="og:image" content="https://schoolsys.com/static/img/preview_schoolsys.png">
+<!-- end::SchoolSys Meta Social -->
+
+<!-- begin::SchoolSys Meta Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://schoolsys.com/">
+<meta name="twitter:creator" content="@schoolsys">
+<meta name="twitter:title" content="SchoolSys | Modern School Management System">
+<meta name="twitter:description" content="
+SchoolSys empowers schools with digital tools for academic planning, staff management,
+communication, student data, and administrative efficiency.
+">
+<meta name="twitter:image" content="https://schoolsys.com/static/img/preview_schoolsys.png">
+<!-- end::SchoolSys Meta Twitter -->
+
+
+  <!-- begin::GXON Website Page Title -->
+  <title>SCHOOLSYS | School Dashboard</title>
+  <!-- end::GXON Website Page Title -->
+
+  <!-- begin::GXON Mobile Specific -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- end::GXON Mobile Specific -->
+
+  <!-- begin::GXON Favicon Tags -->
+<link rel="icon" type="image/png" href="{% static 'assets/images/logo.png' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/logo.png' %}">
+  <!-- end::GXON Favicon Tags -->
+
+  <!-- begin::GXON Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <!-- end::GXON Google Fonts -->
+
+  <link rel="stylesheet" href="{% static 'assets/libs/flaticon/css/all/all.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/libs/lucide/lucide.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/libs/fontawesome/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/libs/simplebar/simplebar.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/libs/node-waves/waves.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-select/css/bootstrap-select.min.css' %}">
+
+  <!-- begin::GXON CSS Stylesheet -->
+  <link rel="stylesheet" href="{% static 'assets/libs/flatpickr/flatpickr.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/libs/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+  <!-- end::GXON CSS Stylesheet -->
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+  <div class="page-layout">
+
+  {% include "partials/navbar.html" %}
+
+    <div class="modal fade" id="searchResultsModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header py-1 px-3">
+            <form class="d-flex align-items-center position-relative w-100" action="#">
+              <button type="button" class="btn btn-sm border-0 position-absolute start-0 p-0 text-sm ">
+                <i class="fi fi-rr-search"></i>
+              </button>
+              <input type="text" class="form-control form-control-lg ps-4 border-0 shadow-none" id="searchInput" placeholder="Search anything's">
+            </form>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pb-2" style="height: 300px;" data-simplebar>
+            <div id="recentlyResults">
+              <span class="text-uppercase text-2xs fw-semibold text-muted d-block mb-2">Recently Searched:</span>
+              <ul class="list-inline search-list">
+                <li>
+                  <a class="search-item" href="index.html">
+                    <i class="fi fi-rr-apps"></i> Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a class="search-item" href="chat.html">
+                    <i class="fi fi-rr-comment"></i> Chat
+                  </a>
+                </li>
+                <li>
+                  <a class="search-item" href="calendar.html">
+                    <i class="fi fi-rr-calendar"></i> Calendar
+                  </a>
+                </li>
+                <li>
+                  <a class="search-item" href="chart/apexchart.html">
+                    <i class="fi fi-rr-chart-pie-alt"></i> Apexchart
+                  </a>
+                </li>
+                <li>
+                  <a class="search-item" href="pages/pricing.html">
+                    <i class="fi fi-rr-file"></i> Pricing
+                  </a>
+                </li>
+                <li>
+                  <a class="search-item" href="email/inbox.html">
+                    <i class="fi fi-rr-envelope"></i> Email
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div id="searchContainer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- begin::GXON Sidebar Menu -->
+
+{% include "partials/sidemenu.html" %}
+    <!-- begin::GXON Sidebar right -->
+{% include "partials/rightmenu.html" %}
+    <!-- end::GXON Sidebar right -->
+
+    <main class="app-wrapper">
+
+      <div class="container">
+
+            {% block layout %}
+            {% endblock layout %}
+
+      </div>
+
+    </main>
+
+    <!-- begin::GXON Footer -->
+{% include "partials/footer.html" %}
+    <!-- end::GXON Footer -->
+
+  </div>
+
+  <!-- begin::GXON Page Scripts -->
+  <script src="{% static 'assets/libs/global/global.min.js' %}"></script>
+  <script src="{% static 'assets/libs/sortable/Sortable.min.js' %}"></script>
+  <script src="{% static 'assets/libs/chartjs/chart.js' %}"></script>
+  <script src="{% static 'assets/libs/flatpickr/flatpickr.min.js' %}"></script>
+  <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static 'assets/libs/datatables/datatables.min.js' %}"></script>
+  <script src="{% static 'assets/js/dashboard.js' %}"></script>
+  <script src="{% static 'assets/js/todolist.js' %}"></script>
+  <script src="{% static 'assets/js/appSettings.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+  <!-- end::GXON Page Scripts -->
+</body>
+
+</html>

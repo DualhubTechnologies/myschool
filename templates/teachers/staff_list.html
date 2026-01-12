@@ -1,0 +1,230 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block layout %}
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Staff Members</h3>
+
+        <button class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#addStaffModal">
+            Add Staff
+        </button>
+    </div>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Staff Table -->
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+<table class="table display datatable">
+                <thead class="table-light">
+                    <tr>
+    <th></th>
+    <th>Full Name</th>
+    <th>Employee ID</th>
+    <th>Job Title</th>
+    <th>Department</th>
+    <th>Phone</th>
+    <th>Employment Type</th>
+    <th>Date Employed</th>
+    <th>Highest Qualification</th>
+    <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+              <tbody>
+{% for staff in staff_list %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ staff.full_name }}</td>
+        <td>{{ staff.employee_id }}</td>
+        <td>{{ staff.job_title }}</td>
+        <td>{{ staff.department|default:"-" }}</td>
+        <td>{{ staff.phone|default:"-" }}</td>
+        <td>{{ staff.get_employment_type_display }}</td>
+        <td>{{ staff.date_of_employment|date:"Y-m-d"|default:"-" }}</td>
+        <td>{{ staff.get_highest_qualification_display|default:"-" }}</td>
+
+<td class="text-center">
+    <div class="dropdown">
+        <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+            Actions
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+
+            <!-- Edit -->
+            <li>
+                <a class="dropdown-item"
+                   href="#"
+                   data-bs-toggle="modal"
+                   data-bs-target="#editStaffModal{{ staff.id }}">
+                    Edit
+                </a>
+            </li>
+
+            <!-- Delete -->
+            <li>
+                <a class="dropdown-item text-danger"
+                   href="#"
+                   data-bs-toggle="modal"
+                   data-bs-target="#deleteStaffModal{{ staff.id }}">
+                    Delete
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</td>
+
+    </tr>
+
+    <!-- EDIT MODAL -->
+    <div class="modal fade" id="editStaffModal{{ staff.id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <form method="POST"
+                      action="{% url 'teachers:edit_staff' staff.id %}">
+                    {% csrf_token %}
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Staff Profile</h5>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        {{ staff.form.as_p }}
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                        <button type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE MODAL -->
+    <div class="modal fade" id="deleteStaffModal{{ staff.id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Staff</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    Are you sure you want to delete
+                    <strong>{{ staff.full_name }}</strong>?
+                </div>
+
+                <div class="modal-footer">
+                    <a href="{% url 'teachers:delete_staff' staff.id %}"
+                       class="btn btn-danger">
+                        Delete
+                    </a>
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% empty %}
+    <tr>
+        <td colspan="9" class="text-center text-muted py-4">
+            No staff profiles found.
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ADD STAFF MODAL -->
+<div class="modal fade" id="addStaffModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <form method="POST" action="{% url 'teachers:create_staff' %}">
+                {% csrf_token %}
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Staff</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Create Staff
+                    </button>
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.jQuery && $.fn.DataTable) {
+        $('.datatable').DataTable({
+            pageLength: 10,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            responsive: true,
+            columnDefs: [
+                { orderable: false, targets: -1 } // Disable sorting on Actions
+            ]
+        });
+    }
+});
+</script>
+
+{% endblock %}

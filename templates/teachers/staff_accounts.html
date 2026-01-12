@@ -1,0 +1,183 @@
+ {% extends "partials/base.html" %}
+{% load static %}
+{% load dict_extras %}
+
+{% block layout %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Staff Accounts</h3>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table display datatable">
+                <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Employee ID</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Account</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for staff in staff_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ staff.full_name }}</td>
+                    <td>{{ staff.employee_id }}</td>
+                    <td>{{ staff.user.email }}</td>
+<td>
+    {% if staff.user %}
+        {{ user_roles|dict_get:staff.user.id|default:"No Role" }}
+    {% else %}
+        —
+    {% endif %}
+</td>
+                    <td>
+                        {% if staff.user %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">No Account</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#accountModal{{ staff.id }}">
+                            {% if staff.user %}Edit Account{% else %}Create Account{% endif %}
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- ACCOUNT MODAL -->
+                <div class="modal fade" id="accountModal{{ staff.id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="staff_id" value="{{ staff.id }}">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        {{ staff.full_name }} – Account
+                                    </h5>
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Role</label>
+                                        <select name="role"
+                                                class="form-select role-select"
+                                                data-staff="{{ staff.id }}"
+                                                required>
+                                            {% for role in roles %}
+                                                <option value="{{ role.id }}"
+                                                    {% if staff.user and user_roles %}
+                                                        selected
+                                                    {% endif %}>
+                                                    {{ role.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3 subjects-section"
+                                         id="subjects-{{ staff.id }}"
+                                         style="display:none;">
+                                        <label class="form-label">Subjects</label>
+                                        {% for subject in subjects %}
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       name="subjects"
+                                                       value="{{ subject.id }}"
+                                                       {% if subject.id in staff_subjects %}
+                                                           checked
+                                                       {% endif %}>
+                                                <label class="form-check-label">
+                                                    {{ subject.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% if not staff.user %}
+                                        <div class="mb-3">
+                                            <label>Email</label>
+                                            <input type="email" name="email"
+                                                   class="form-control" autocomplete="off" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Password</label>
+                                            <input type="password" name="password"
+                                                   class="form-control" autocomplete="new-password" required>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="is_active"
+                                                   {% if staff.user.is_active %}checked{% endif %}>
+                                            <label class="form-check-label">
+                                                Account Active
+                                            </label>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">
+                                        Save
+                                    </button>
+                                    <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".role-select").forEach(function (select) {
+
+        function toggleSubjects() {
+            const staffId = select.dataset.staff;
+            const box = document.getElementById("subjects-" + staffId);
+            if (!box) return;
+
+            const text = select.options[select.selectedIndex].text.toLowerCase();
+            box.style.display = text.includes("teacher") ? "block" : "none";
+        }
+
+        select.addEventListener("change", toggleSubjects);
+        toggleSubjects();
+    });
+
+});
+</script>
+
+{% endblock %}

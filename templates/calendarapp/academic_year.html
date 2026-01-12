@@ -1,0 +1,72 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block layout %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between">
+        <h3>Academic Years</h3>
+
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addYearModal">
+            <i class="fi fi-rr-plus"></i> Add Year
+        </button>
+    </div>
+
+    <hr>
+
+    <div class="card shadow-sm">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for y in years %}
+                <tr>
+                    <td>{{ y.year }}</td>
+                    <td>{{ y.start_date }}</td>
+                    <td>{{ y.end_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">No academic years added.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<!-- ADD YEAR MODAL -->
+<div class="modal fade" id="addYearModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <form method="POST">
+        {% csrf_token %}
+        <div class="modal-header">
+            <h5 class="modal-title">Add Academic Year</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            {{ form.as_p }}
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

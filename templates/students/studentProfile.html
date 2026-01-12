@@ -1,0 +1,182 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet"><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css'>
+{% endblock %}
+
+
+
+{% block layout %}		
+<section>
+  <div class="rt-container">
+    <div class="col-rt-12">
+      <div class="Scriptcontent">           
+        <!-- Student Profile -->
+        <div class="student-profile py-4">
+          <div class="container">
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-lg-4">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-transparent text-center">
+                    {% if student.photo %}
+                      <img class="profile_img" src="{{ student.photo.url }}" alt="student photo">
+                    {% else %}
+                      <img class="profile_img" src="{% static 'student_photos/default.png' %}" alt="default photo">
+                    {% endif %}
+                    <h3>{{ student.first_name }} {{ student.other_names }}</h3>
+                  </div>
+                  <div class="card-body">
+                    <p style="margin-bottom: 2px;"><strong>Admission No:</strong> {{ student.admission_number }}</p>
+                    <p style="margin-bottom: 2px;"><strong>SchoolPay Code:</strong> {{ student.schoolpay_code }}</p>
+                    <p style="margin-bottom: 2px;"><strong>LIN:</strong> {{ student.Lin }}</p>
+                    <p style="margin-bottom: 2px;"><strong>Class:</strong> {{ student.school_class.name }}</p>
+                    <p style="margin-bottom: 2px;"><strong>Stream:</strong> {{ student.stream.name }}</p>
+                    <p style="margin-bottom: 2px;"><strong>Status:</strong> {{ student.get_status_display }}</p>
+
+   
+                  </div>
+                </div>
+
+                <!-- Guardian Details -->
+                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent text-center">
+                    <h4>Parent / Guardian Details</h4>
+                  </div>
+                  <div class="card-body">
+                    {% for parent in parents %}
+                      <p style="margin-bottom: 2px;"><strong>{{ parent.get_relationship_display }}:</strong> {{ parent.first_name }} {{ parent.last_name }}</p>
+                      <p style="margin-bottom: 2px;"><strong>Contact:</strong> {{ parent.phone_number }}</p>
+                      <p style="margin-bottom: 2px;"><strong>Email:</strong> {{ parent.email }}</p>
+                      <p style="margin-bottom: 2px;"><strong>Address:</strong> {{ parent.address }}</p>
+                      <hr>
+                    {% empty %}
+                      <p>No parent/guardian details available.</p>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <!-- General Information -->
+                <div class="card shadow-sm">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">General Information</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <table class="table table-bordered">
+                      <tr><th>Gender</th><td>{{ student.get_gender_display }}</td></tr>
+                      
+                      <tr><th>Status</th><td>{{ student.get_status_display }}</td></tr>
+                      <tr><th>Section</th><td>{{ student.get_section_display }}</td></tr>
+                      <tr><th>Home Address</th><td>{{ student.address }}</td></tr>
+                      <tr><th>Date Of Birth</th><td>{{ student.date_of_birth }}</td></tr>
+                      <tr><th>Date Of Enrollment</th><td>{{ student.enrollment_date }}</td></tr>
+                    </table>
+                  </div>
+                </div>
+
+                                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">Fees Details</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                        {% if invoice %}
+                        <table class="table table-bordered">
+                        <tr><th>Previous Arrears</th><td>{{ student.previous_arrears }}</td></tr>
+                        <tr><th>Total Fees</th><td>{{ invoice.due_amount }}</td></tr>
+                        <tr><th>Amount Paid</th><td>{{ invoice.amount_paid }}</td></tr>
+                        <tr><th>Balance</th><td>{{ invoice.balance_due }}</td></tr>
+                        <tr><th>Due Date</th><td>{{ invoice.due_date }}</td></tr>
+                        </table>
+                        {% else %}
+                        <p>No invoice available for this student.</p>
+                        {% endif %}
+                  </div>
+                </div>
+           
+                <!-- Academic Performance -->
+                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">Academic Performance</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Subject</th>
+                          <th>Marks</th>
+                          <th>Grade</th>
+                          <th>Teacher’s Remark</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>Mathematics</td><td>92</td><td>A+</td><td>Excellent</td></tr>
+                        <tr><td>English</td><td>85</td><td>A</td><td>Very Good</td></tr>
+                        <tr><td>Science</td><td>88</td><td>A</td><td>Good</td></tr>
+                        <tr><td>Social Studies</td><td>79</td><td>B+</td><td>Can improve</td></tr>
+                        <tr><td>Computer</td><td>95</td><td>A+</td><td>Outstanding</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Attendance -->
+                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">Attendance Record</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <p><strong>Total Days:</strong> 220</p>
+                    <p><strong>Days Present:</strong> 210</p>
+                    <p><strong>Attendance %:</strong> 95%</p>
+                  </div>
+                </div>
+
+                <!-- Extra Curricular -->
+                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">Extracurricular Activities</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <ul>
+                      <li>Member of Science Club</li>
+                      <li>Football Team Captain</li>
+                      <li>Debate Competition Winner 2024</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Remarks -->
+                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">Teacher’s Remark</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <p>Very dedicated student with excellent academic and leadership qualities.</p>
+                  </div>
+                </div>
+
+                <div class="card shadow-sm mt-3">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0">Principal’s Remark</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <p>Promoted to Class 5. Keep up the good work.</p>
+                  </div>
+                </div>
+
+              </div> <!-- end col-lg-8 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

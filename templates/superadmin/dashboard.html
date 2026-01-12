@@ -1,0 +1,132 @@
+{% extends "superadmin/adminpartials/base.html" %}
+{% load static %}
+{% block title %}eCommerce Category List - Apps{% endblock %}
+
+
+{% block extra_head %}
+
+
+{% endblock %}
+{% block layout %}
+<div class="row g-6">
+    <!-- Card Border Shadow -->
+    <div class="col-lg-3 col-sm-6">
+          <a href="/students/studentDetails/" class="text-decoration-none">
+        <div class="card card-border-shadow-primary h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-primary">
+                            <i class="ti ti-users ti-28px"></i>
+                        </span>
+                    </div>
+                    <h4 class="mb-0">{{ total_enrolment }} <span class="text-primary"
+                            style="font-size: small;">Students</span></h4>
+                </div>
+                <p class="mb-1">Total Students <span class="text-primary" style="font-size: x-small;">(ACTIVE)</span>
+                </p>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card card-border-shadow-warning h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-warning">
+                            <i class="ti ti-gender-male ti-28px"></i>
+                        </span>
+                    </div>
+                    <h4 class="mb-0">{{ techers_count }}<span class="text-primary"
+                            style="font-size: small;"> Staff</span></h4>
+                </div>
+                <p class="mb-1">Total Employees <span class="text-primary" style="font-size: x-small;">(ACTIVE)</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card card-border-shadow-danger h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-danger">
+                            
+                            <i class="ti ti-gender-male ti-28px"></i>
+                        </span>
+                    </div>
+                    <h4 class="mb-0">{{ female_count }} <span class="text-primary"
+                            style="font-size: small;">Students</span></h4>
+                </div>
+                <p class="mb-1">Female Students
+                    <span class="text-primary" style="font-size: x-small;">(ACTIVE)</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card card-border-shadow-info h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-info">
+                            
+                            <i class="ti ti-gender-female ti-28px"></i>
+                        </span>
+                    </div>
+                    <h4 class="mb-0">{{ boarding_count }} <span class="text-primary"
+                            style="font-size: small;">Students</span></h4>
+                </div>
+                <p class="mb-1">Male Students <span class="text-primary" style="font-size: x-small;">(ACTIVE)</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!--/ Card Border Shadow -->
+
+    <!-- Class  statistics-->
+    <div class="col-xxl-6 col-lg-7">
+        <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div class="card-title mb-0">
+                    <h5 class="mb-1">Class statistics</h5>
+                    <p class="card-subtitle">Total number of Active students 23</p>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-label-primary">January</button>
+                    <button type="button" class="btn btn-label-primary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:void(0);">January</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">February</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">March</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">April</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">May</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">June</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">July</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">August</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">September</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">October</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">November</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">December</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="classStatisticsChart"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock layout %}
+
+
+
+{% block extra_js %}
+<script src="{% static 'dashboards/students/enrolmentsummery.js' %}"></script>
+<!-- js goes here -->
+{% endblock %}

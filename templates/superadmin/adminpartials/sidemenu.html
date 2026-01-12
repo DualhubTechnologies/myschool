@@ -1,0 +1,41 @@
+{% load static %}
+    <aside class="app-menubar" id="menubar">
+      <div class="app-navbar-brand">
+        <a class="navbar-brand-logo" href="index.html">
+          <img src="{% static 'assets/images/logo.png' %}" alt="logo" style="height:30px; width:auto;"> 
+        </a>
+        <a class="navbar-brand-mini visible-light" href="index.html">
+          <img src="{% static 'assets/images/logo-text.png' %}" alt="logo" style="height:30px; width:auto;">
+        </a>
+        <a class="navbar-brand-mini visible-dark" href="index.html">
+          <img src="{% static 'assets/images/logo-text-white.png' %}" alt="logo" style="height:50px; width:auto;">
+        </a>
+      </div>
+      <nav class="app-navbar" data-simplebar>
+        <ul class="menubar">
+
+          <li class="menu-item">
+            <a class="menu-link" href="{% url 'accounts:superadmin_dashboard' %}">
+              <i class="fi fi-rr-apps"></i>
+              <span class="menu-label">Dashboard</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="{% url 'accounts:list_users' %}">
+              <i class="fi fi-rr-comment"></i>
+              <span class="menu-label">Schools</span>
+            </a>
+          </li>
+
+
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="app-footer">
+        <a href="pages/faq.html" class="btn btn-outline-light waves-effect btn-shadow btn-app-nav w-100">
+          <i class="fi fi-rs-interrogation text-primary"></i>
+          <span class="nav-text">Help and Support</span>
+        </a>
+      </div>
+    </aside>

@@ -1,0 +1,267 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block layout %}
+
+
+
+  <div class="container">
+
+    <!-- Page Header -->
+    <div class="app-page-head d-flex align-items-center justify-content-between">
+      <div class="clearfix">
+        <h1 class="app-page-title">School Calendar</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href="{% url 'accounts:user_dashboard' %}">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+
+        <div class="card">
+          <div class="card-body p-0">
+            <div class="row g-0">
+
+              <!-- Left Sidebar -->
+              <div class="col-lg-3 p-4 border-end">
+
+                <button id="openDrawerBtn" class="btn btn-primary waves-effect waves-light w-100"
+                        data-bs-toggle="modal" data-bs-target="#modalAddEvent">
+                  <i class="fi fi-rr-plus me-1"></i> Add Event
+                </button>
+
+                <hr class="border-dashed my-4">
+
+                <h6 class="mb-3">Quick Event Types</h6>
+
+                <div id="external-events" class="d-grid gap-2">
+
+                  <div class="fc-event cursor-move rounded-2 px-3 py-2 bg-primary-subtle text-primary"
+                       data-color="primary" data-location="School"
+                       data-description="General school activity.">
+                    <i class="fi fi-rr-bell me-1"></i> General Event
+                  </div>
+
+                  <div class="fc-event cursor-move rounded-2 px-3 py-2 bg-success-subtle text-success"
+                       data-color="success" data-location="School Hall"
+                       data-description="Sports or outdoor activities">
+                    <i class="fi fi-rr-volleyball me-1"></i> Sports Activity
+                  </div>
+
+                  <div class="fc-event cursor-move rounded-2 px-3 py-2 bg-warning-subtle text-warning"
+                       data-color="warning" data-location="Main Hall"
+                       data-description="Exams or tests">
+                    <i class="fi fi-rr-edit me-1"></i> Exam Period
+                  </div>
+
+                  <div class="fc-event cursor-move rounded-2 px-3 py-2 bg-danger-subtle text-danger"
+                       data-color="danger" data-location="Office"
+                       data-description="Important fee reminders">
+                    <i class="fi fi-rr-money-bill me-1"></i> Fees Deadline
+                  </div>
+
+                  <div class="fc-event cursor-move rounded-2 px-3 py-2 bg-info-subtle text-info"
+                       data-color="info" data-location="Conference Room"
+                       data-description="Meetings with staff or parents">
+                    <i class="fi fi-rr-users-alt me-1"></i> Meeting
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- Calendar Section -->
+              <div class="col-lg-9 p-4">
+                <div id="calendar"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Event Modal -->
+        <div class="modal fade" id="modalAddEvent" tabindex="-1" aria-labelledby="modalAddEventLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalAddEventLabel">Add Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+
+              <div class="modal-body">
+                <form id="eventForm">
+
+                  <div class="row">
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Title</label>
+                      <input type="text" id="title" class="form-control" required>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Event Type</label>
+                      <select id="label" class="form-select">
+                        <option value="primary">General</option>
+                        <option value="success">Sports</option>
+                        <option value="warning">Exam</option>
+                        <option value="danger">Fees Deadline</option>
+                        <option value="info">Meeting</option>
+                      </select>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                      <label class="form-label">Start Date</label>
+                      <input type="datetime-local" id="eventStartDate" class="form-control" required>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                      <label class="form-label">End Date</label>
+                      <input type="datetime-local" id="eventEndDate" class="form-control">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Event URL (Optional)</label>
+                      <input type="url" id="url" class="form-control">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Location</label>
+                      <input type="text" id="location" class="form-control">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Description</label>
+                      <textarea id="description" class="form-control"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary ms-2" data-bs-dismiss="modal">Add Event</button>
+                    </div>
+
+                  </div>
+
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Details Modal -->
+        <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="eventTitle">Event Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+
+              <div class="modal-body">
+                <p><strong>Start:</strong> <span id="eventStart"></span></p>
+                <p><strong>End:</strong> <span id="eventEnd"></span></p>
+                <p><strong>Location:</strong> <span id="eventLocation"></span></p>
+                <p class="mb-0"><strong>Description:</strong> <span id="eventDescription"></span></p>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Draggable Templates
+  new FullCalendar.Draggable(document.getElementById("external-events"), {
+    itemSelector: ".fc-event",
+    eventData: function (eventEl) {
+      return {
+        title: eventEl.innerText.trim(),
+        classNames: `bg-${eventEl.dataset.color}`,
+        extendedProps: {
+          location: eventEl.dataset.location,
+          description: eventEl.dataset.description
+        }
+      };
+    }
+  });
+
+  // Calendar
+  let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+    initialView: "dayGridMonth",
+    editable: true,
+    droppable: true,
+    events: "/calendar/events/",
+
+    eventClick: function (info) {
+      document.getElementById("eventTitle").innerText = info.event.title;
+      document.getElementById("eventStart").innerText = info.event.start;
+      document.getElementById("eventEnd").innerText = info.event.end ?? "";
+      document.getElementById("eventLocation").innerText = info.event.extendedProps.location;
+      document.getElementById("eventDescription").innerText = info.event.extendedProps.description;
+
+      new bootstrap.Modal(document.getElementById("eventDetailsModal")).show();
+    }
+
+  });
+
+  calendar.render();
+
+  // Add Event Form Submission
+  document.getElementById("eventForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    let payload = {
+      title: document.getElementById("title").value,
+      label: document.getElementById("label").value,
+      start: document.getElementById("eventStartDate").value,
+      end: document.getElementById("eventEndDate").value,
+      url: document.getElementById("url").value,
+      location: document.getElementById("location").value,
+      description: document.getElementById("description").value,
+    };
+
+    fetch("/calendar/events/add/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
+      body: JSON.stringify(payload),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        calendar.refetchEvents();
+      }
+    });
+  });
+
+});
+</script>
+
+{% endblock %}

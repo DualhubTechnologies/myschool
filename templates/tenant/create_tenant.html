@@ -1,0 +1,13 @@
+<h2>Create user</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <h3>School Info</h3>
+    {{ user_form.as_p }}
+
+    <h3>Admin Info</h3>
+    {{ admin_form.as_p }}
+
+    <button type="submit">Create user</button>
+</form>

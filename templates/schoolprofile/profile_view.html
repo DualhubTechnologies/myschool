@@ -1,0 +1,107 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block layout %}
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- Left: Logo & Basic Info -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+
+                    {% if profile.logo %}
+                        <img src="{{ profile.logo.url }}" class="img-fluid rounded mb-3" style="max-height:150px;">
+                    {% else %}
+                        <img src="{% static 'img/default_school.png' %}" class="img-fluid rounded mb-3" style="max-height:150px;">
+                    {% endif %}
+
+                    <h4 class="fw-bold">{{ user.name }}</h4>
+                    <p class="text-muted">{{ profile.motto }}</p>
+
+                    <a href="{% url 'profile:edit_school_profile' %}" class="btn btn-primary btn-sm mt-2">
+                        <i class="bi bi-pencil-square"></i> Edit Profile
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Right: Detailed Profile -->
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-3">
+                {% if profile.banner %}
+                    <img src="{{ profile.banner.url }}" class="img-fluid rounded-top" style="max-height:200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="fw-bold">School Information</h5>
+                    <hr>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <p><strong>Type:</strong> {{ profile.get_school_type_display }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Ownership:</strong> {{ profile.get_ownership_display }}</p>
+                        </div>
+                    </div>
+
+                    <p><strong>Registration Number:</strong> {{ profile.registration_number|default:"N/A" }}</p>
+
+                    <p>
+                        <strong>Address:</strong><br>
+                        {{ profile.address|default:"N/A" }}<br>
+                        <strong>District:</strong> {{ profile.district|default:"N/A" }}<br>
+                        <strong>Region:</strong> {{ profile.region|default:"N/A" }}
+                    </p>
+
+                    <hr>
+                    <h6 class="fw-bold">Academic Year</h6>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Start:</strong> {{ profile.academic_year_start|date:"d M Y" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>End:</strong> {{ profile.academic_year_end|date:"d M Y" }}</p>
+                        </div>
+                    </div>
+                                        <hr>
+                    <h6 class="fw-bold">Contact</h6>
+
+                    <div class="row">
+                    <p><strong>Email:</strong> {{ profile.contact_email|default:"N/A" }}</p>
+                    <p><strong>Phone:</strong> {{ profile.contact_phone|default:"N/A" }}</p>
+                    <p><strong>Website:</strong>
+                        {% if profile.website %}
+                            <a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </p>
+                    </div>
+
+                                                            <hr>
+                    <h6 class="fw-bold">System Information</h6>
+
+                    <div class="row">
+                    <p><strong>Profile Created:</strong> {{ profile.created_at|date:"d M Y, h:i A" }}</p>
+                    <p><strong>Last Updated:</strong> {{ profile.updated_at|date:"d M Y, h:i A" }}</p>
+                    </div>
+                      
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+

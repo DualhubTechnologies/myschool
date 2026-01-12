@@ -37,7 +37,41 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_users',            # for multi-tenancy
+    'accounts',
+    'schoolprofile',
+    'teachers',
+    'students',
+
 ]
+
+
+
+
+SHARED_APPS = [
+    'widget_tweaks',
+    'django_currentuser',
+    "accounts",                  # Custom User + Role models
+
+    # Django default shared apps — stay in public schema:
+    "django.contrib.contenttypes",
+    "django.contrib.auth",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.admin",
+]
+
+user_APPS = [
+    # Apps whose data is specific to each school:
+    "students",
+    "teachers",
+    "schoolprofile",
+]
+
+INSTALLED_APPS = SHARED_APPS + user_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +88,7 @@ ROOT_URLCONF = 'myschool.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,4 +148,103 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+
+# Static (CSS/JS/images you ship with the app)
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]        # your source assets in dev
+STATIC_ROOT = BASE_DIR / "staticfiles"          # collected here for prod
+
+# Media (user uploads like photos/signatures)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
+# ------------------------------
+# DATABASE — MUST BE POSTGRES
+# ------------------------------
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",   # REQUIRED
+        "NAME": "schoolsys_db",                          # Your database name
+        "USER": "postgres",
+        "PASSWORD": "rdi123",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
+
+
+# ------------------------------
+# TEMPLATES
+# ------------------------------
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
+
+# ------------------------------
+# AUTHENTICATION
+# ------------------------------
+
+AUTH_USER_MODEL = "accounts.User"
+PUBLIC_DOMAIN = "schoolsys.local"
+
+
+
+# ------------------------------
+# PASSWORD VALIDATORS
+# ------------------------------
+
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
+
+# ------------------------------
+# TIMEZONE / STATIC
+# ------------------------------
+
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "Africa/Kampala"
+USE_I18N = True
+USE_TZ = True
+
+STATIC_URL = "static/"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "dualhubtechnologies@gmail.com"
+EMAIL_HOST_PASSWORD = "etngvnaceayrpuna"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_URL = "accounts:user_login"
+LOGIN_REDIRECT_URL = "accounts:user_dashboard"
+LOGOUT_REDIRECT_URL = "accounts:user_login"
+
+
+HOME_URL_NAME = "accounts:user_dashboard"
+
+
+
+
+ 

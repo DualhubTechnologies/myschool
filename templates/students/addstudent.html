@@ -1,0 +1,460 @@
+{% extends "partials/base.html" %}
+{% load static widget_tweaks %}
+{% block title %}Student Details – Apps{% endblock %}
+
+{% block layout %}
+<div class="row">
+  <div class="col-xxl">
+    <div class="card mb-6">
+      <!-- Card Header -->
+      <div class="card-header d-flex align-items-center">
+        <h5 class="mb-0">Student Details</h5>
+        <div class="ms-auto d-flex gap-2">
+          <button type="button"
+                  class="btn btn-outline-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#uploadModal">
+            Upload Excel data
+          </button>
+          <a href="{% url 'students:studentDetails' %}"
+             class="btn btn-secondary">
+            View Students List
+          </a>
+        </div>
+      </div>
+
+      <!-- Manual-Entry Form -->
+      <div class="card-body">
+        <form method="post"
+              enctype="multipart/form-data"
+              action="{% url 'students:addstudent' %}">
+          {% csrf_token %}
+          <div class="row">
+            <!-- Left column -->
+            <div class="col-md-6">
+              <!-- Student Number -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.admission_number.id_for_label }}">
+                  Student Number
+                </label>
+                <div class="col-sm-8">
+                  {{ form.admission_number|add_class:"form-control" }}
+                  {{ form.admission_number.errors }}
+                </div>
+              </div>
+                            <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.schoolpay_code.id_for_label }}">
+                  Lin Number
+                </label>
+                <div class="col-sm-8">
+                  {{ form.Lin|add_class:"form-control" }}
+                  {{ form.Lin.errors }}
+                </div>
+              </div>
+              <!-- SchoolPay Code -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.schoolpay_code.id_for_label }}">
+                  SchoolPay Code
+                </label>
+                <div class="col-sm-8">
+                  {{ form.schoolpay_code|add_class:"form-control" }}
+                  {{ form.schoolpay_code.errors }}
+                </div>
+              </div>
+              <!-- First Name -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.first_name.id_for_label }}">
+                  First Name
+                </label>
+                <div class="col-sm-8">
+                  {{ form.first_name|add_class:"form-control" }}
+                  {{ form.first_name.errors }}
+                </div>
+              </div>
+              <!-- Other Names -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.other_names.id_for_label }}">
+                  Other Names
+                </label>
+                <div class="col-sm-8">
+                  {{ form.other_names|add_class:"form-control" }}
+                  {{ form.other_names.errors }}
+                </div>
+              </div>
+              <!-- Date of Birth -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.date_of_birth.id_for_label }}">
+                  Date of Birth
+                </label>
+                <div class="col-sm-8">
+                  {{ form.date_of_birth|add_class:"form-control" }}
+                  {{ form.date_of_birth.errors }}
+                </div>
+              </div>
+
+              <!-- Class -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.school_class.id_for_label }}">
+                  Class
+                </label>
+                <div class="col-sm-8">
+                  {{ form.school_class|add_class:"form-select" }}
+                  {{ form.school_class.errors }}
+                </div>
+              </div>
+              <!-- Submit Button -->
+              <div class="row">
+                <div class="col-sm-8 offset-sm-4">
+                  <button type="submit" class="btn btn-primary">
+                    Save Student
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right column -->
+            <div class="col-md-6">
+
+                            <!-- Gender -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.gender.id_for_label }}">
+                  Gender
+                </label>
+                <div class="col-sm-8">
+                  {{ form.gender|add_class:"form-select" }}
+                  {{ form.gender.errors }}
+                </div>
+              </div>
+              <!-- Stream -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.stream.id_for_label }}">
+                  Stream
+                </label>
+                <div class="col-sm-8">
+                  {{ form.stream|add_class:"form-select" }}
+                  {{ form.stream.errors }}
+                </div>
+              </div>
+              <!--  Guardian Name -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.parent_name.id_for_label }}">
+                  Guardian Name
+                </label>
+                <div class="col-sm-8">
+                  {{ form.parent_name|add_class:"form-control" }}
+                  {{ form.parent_name.errors }}
+                </div>
+              </div>
+
+              <!-- parent_contact -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.parent_contact.id_for_label }}">
+                   Guardian Contact
+                </label>
+                <div class="col-sm-8">
+                  {{ form.parent_contact|add_class:"form-control" }}
+                  {{ form.parent_contact.errors }}
+                </div>
+              </div>
+
+              <!-- Address -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.address.id_for_label }}">
+                  Address
+                </label>
+                <div class="col-sm-8">
+                  {{ form.address|add_class:"form-control" }}
+                  {{ form.address.errors }}
+                </div>
+              </div>
+              <!-- Photo -->
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label"
+                       for="{{ form.photo.id_for_label }}">
+                  Photo
+                </label>
+                <div class="col-sm-8">
+                  {{ form.photo|add_class:"form-control" }}
+                  {{ form.photo.errors }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1"
+     aria-labelledby="uploadModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="uploadModalLabel">
+          Upload Students via Excel/CSV
+        </h5>
+        <button type="button" class="btn-close"
+                data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <!-- File Input / Dropzone -->
+        <label for="excelFileInput"
+               class="d-flex flex-column align-items-center p-4 mb-4"
+               style="border:2px dashed #ccc; border-radius:.5rem; cursor:pointer;">
+          <i class="ti ti-cloud-upload ti-48px text-success mb-2"></i>
+          <span id="fileName" class="text-muted">
+            Click or drag file here
+          </span>
+          <input type="file"
+                 id="excelFileInput"
+                 name="excel_file"
+                 class="d-none"
+                 accept=".xlsx,.xls,.csv" />
+        </label>
+
+        <!-- Steps -->
+        <div class="d-flex justify-content-between mb-3">
+          <div class="text-center step" data-step="upload">
+            <i class="ti ti-upload-cloud ti-24px text-muted"></i>
+            <div class="small">File Upload</div>
+          </div>
+          <div class="text-center step" data-step="scan">
+            <i class="ti ti-shield-check ti-24px text-muted"></i>
+            <div class="small">Virus Scan</div>
+          </div>
+          <div class="text-center step" data-step="validate">
+            <i class="ti ti-list-check ti-24px text-muted"></i>
+            <div class="small">Data Validation</div>
+          </div>
+          <div class="text-center step" data-step="process">
+            <i class="ti ti-loader ti-24px text-muted"></i>
+            <div class="small">Processing</div>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress mb-3" style="height:6px;">
+          <div id="uploadProgress"
+               class="progress-bar bg-success"
+               role="progressbar"
+               style="width:0%"></div>
+        </div>
+
+        <!-- Success message -->
+        <div id="successSummary"
+             class="alert alert-success d-none mb-3"></div>
+
+        <!-- Error summary -->
+        <div id="errorSummary"
+             class="alert alert-danger d-none mb-3"></div>
+
+        <!-- Error List -->
+        <div id="errorContainer"
+             class="p-3 bg-light rounded"
+             style="max-height:150px; overflow-y:auto; display:none;">
+          <ul id="errorList"
+              class="list-unstyled mb-0 text-danger small"></ul>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button"
+                id="startUploadBtn"
+                class="btn btn-primary">
+          Upload
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock layout %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const fileInput      = document.getElementById('excelFileInput');
+  const fileNameEl     = document.getElementById('fileName');
+  const startBtn       = document.getElementById('startUploadBtn');
+  const progressBar    = document.getElementById('uploadProgress');
+  const successSummary = document.getElementById('successSummary');
+  const errorSummary   = document.getElementById('errorSummary');
+  const errorContainer = document.getElementById('errorContainer');
+  const errorList      = document.getElementById('errorList');
+  const url            = '{% url "students:upload_students_excel_json" %}';
+
+  // Show selected filename
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) {
+      fileNameEl.textContent = fileInput.files[0].name;
+      fileNameEl.classList.remove('text-muted');
+    }
+  });
+
+  // Helpers to color icons
+  const successStep = step => {
+    document.querySelector(`.step[data-step="${step}"] .ti`)
+            ?.classList.replace('text-muted','text-success');
+  };
+  const errorStep = step => {
+    document.querySelector(`.step[data-step="${step}"] .ti`)
+            ?.classList.replace('text-muted','text-danger');
+  };
+
+  startBtn.addEventListener('click', () => {
+    if (!fileInput.files.length) {
+      return alert('Please select a file.');
+    }
+
+    // Reset UI
+    successSummary.classList.add('d-none');
+    successSummary.textContent = '';
+    errorSummary.classList.add('d-none');
+    errorSummary.textContent = '';
+    errorContainer.style.display = 'none';
+    errorList.innerHTML = '';
+    progressBar.style.width      = '0%';
+    progressBar.style.background = '#28a745';
+    document.querySelectorAll('.step .ti').forEach(i => {
+      i.classList.remove('text-success','text-danger');
+      i.classList.add('text-muted');
+    });
+
+    const fd = new FormData();
+    fd.append('excel_file', fileInput.files[0]);
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+    // 1) File Upload (0–25%)
+    xhr.upload.addEventListener('loadstart', () => successStep('upload'));
+    xhr.upload.addEventListener('progress', e => {
+      if (e.lengthComputable) {
+        progressBar.style.width = Math.round(e.loaded/e.total*25) + '%';
+      }
+    });
+
+    // 2–4) After upload completes
+    xhr.addEventListener('load', () => {
+      // Virus Scan → 25%
+      if (xhr.status !== 200) {
+        errorStep('scan');
+        return alert('Upload failed (status ' + xhr.status + ')');
+      }
+      successStep('scan');
+      progressBar.style.width = '25%';
+
+      let resp;
+      try {
+        resp = JSON.parse(xhr.responseText);
+      } catch {
+        errorStep('scan');
+        return alert('Invalid server response');
+      }
+
+      const { imported, total, errors = [], message = '' } = resp;
+
+      // Data Validation
+      if (errors.length) {
+        errorStep('validate');
+        errorSummary.textContent = `Validation failed for ${errors.length} row(s). Please fix and Re-upload:`;
+        errorSummary.classList.remove('d-none');
+        progressBar.style.width      = '100%';
+        progressBar.style.background = `
+          linear-gradient(
+            to right,
+            #28a745 0%, #28a745 50%,
+            #dc3545 50%, #dc3545 100%
+          )
+        `;
+        errorContainer.style.display = 'block';
+        errorList.innerHTML = '';
+        errors.forEach(e => {
+          const li = document.createElement('li');
+          li.textContent = e;
+          errorList.append(li);
+        });
+      } else {
+        successStep('validate');
+        progressBar.style.width      = '50%';
+        progressBar.style.background = '#28a745';
+      }
+
+      // Processing / final
+      if (resp.success) {
+        successStep('process');
+        progressBar.style.width      = '100%';
+        progressBar.style.background = '#28a745';
+        successSummary.textContent = message || 'Imported successfully!';
+        successSummary.classList.remove('d-none');
+      } else {
+        errorStep('process');
+        progressBar.style.width      = '100%';
+        progressBar.style.background = `
+          linear-gradient(
+            to right,
+            #28a745 0%, #28a745 75%,
+            #dc3545 75%, #dc3545 100%
+          )
+        `;
+      }
+    });
+
+    xhr.addEventListener('error', () => {
+      errorStep('scan');
+      alert('Network error during upload.');
+    });
+
+    xhr.send(fd);
+  });
+});
+</script>
+
+<style>
+.step .ti {
+  color: #6c757d !important;
+  transition: color .3s;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#id_school_class").change(function () {
+      var url = "{% url 'students:ajax_load_streams' %}";
+      var schoolClassId = $(this).val();
+      $.ajax({
+        url: url,
+        data: {
+          'school_class': schoolClassId
+        },
+        success: function (data) {
+          var $stream = $("#id_stream");
+          $stream.html('<option value="">---------</option>');
+          $.each(data, function (index, stream) {
+            $stream.append('<option value="' + stream.id + '">' + stream.name + '</option>');
+          });
+        }
+      });
+    });
+  });
+</script>
+{% endblock extra_js %}
