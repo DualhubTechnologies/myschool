@@ -145,14 +145,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
-
-# Static (CSS/JS/images you ship with the app)
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]        # your source assets in dev
-STATIC_ROOT = BASE_DIR / "staticfiles"          # collected here for prod
 
 # Media (user uploads like photos/signatures)
 MEDIA_URL = "/media/"
@@ -216,9 +208,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# ------------------------------
-# TIMEZONE / STATIC
-# ------------------------------
+
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Africa/Kampala"
@@ -243,6 +233,11 @@ LOGOUT_REDIRECT_URL = "accounts:user_login"
 
 
 HOME_URL_NAME = "accounts:user_dashboard"
+
+
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 
