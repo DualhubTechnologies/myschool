@@ -1,0 +1,21 @@
+.card{
+    margin-bottom: var(--bs-gutter-x);
+	box-shadow: $card-box-shadow;
+}
+.card-header .card-text{
+	font-size: 13px;
+    font-weight: 400;
+}
+.card-title{
+	color: var(--bs-heading-color);
+	margin-bottom: 0.25rem;
+	font-size: 16px;
+}
+.card-group{
+	height: calc(100% - var(--bs-gutter-x));
+    margin-bottom: var(--bs-gutter-x);
+	
+	.card{
+		--bs-card-height: none;
+	}
+}

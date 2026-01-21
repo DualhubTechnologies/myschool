@@ -1,0 +1,116 @@
+.maintenance-wrapper{
+	.maintenance-status{
+		font-size: 70px;
+		color: var(--bs-heading-color);
+		font-weight: 900;
+		line-height: 1.2;
+		margin-bottom: 15px;
+	}
+	.maintenance-heading{
+		font-size: 20px;
+		line-height: 1.5;
+	}
+	.maintenance-text{
+		font-size: 18px;
+	}
+	@include media-breakpoint-down(xl){
+		.maintenance-status{
+			font-size: 60px;
+		}
+		.maintenance-heading{
+			font-size: 18px;
+		}
+		.maintenance-text{
+			font-size: 16px;
+		}
+	}
+	@include media-breakpoint-down(lg){
+		.maintenance-status{
+			font-size: 50px;
+		}
+		.maintenance-heading{
+			font-size: 16px;
+		}
+		.maintenance-text{
+			font-size: 15px;
+		}
+	}
+	@include media-breakpoint-down(sm){
+		.maintenance-status{
+			font-size: 36px;
+		}
+		.maintenance-text{
+			font-size: 14px;
+		}
+	}
+}
+.maintenance-cover-wrapper{
+	padding: 30px;
+	
+	.maintenance-wrapper{
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
+	.maintenance-cover{
+		background-color: #393736;
+		border-radius: 40px;
+		height: calc(100vh - 60px);
+		width: 100%;
+		text-align: center;
+		min-height: 500px;
+		background-size: cover;
+		background-position: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 50px;
+		overflow: hidden;
+		
+		.cover-img{
+			width: 70%;
+		}
+	}
+	@include media-breakpoint-down(lg){
+		.maintenance-cover{
+			height: auto;
+		}
+	}
+	@include media-breakpoint-down(sm){
+		padding: 10px;
+		
+		.maintenance-cover{
+			height: 100%;
+			border-radius: 20px;
+			padding: 20px;
+			min-height: 350px;
+		}
+		.maintenance-wrapper{
+		    min-height: 48vh;
+		}
+	}
+}
+.maintenance-full-wrapper{
+	min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bs-light);
+    background-position: center;
+    background-size: cover;
+	padding: 50px;
+	
+	@include media-breakpoint-down(xl){
+	
+	}
+	@include media-breakpoint-down(lg){
+		
+	}
+	@include media-breakpoint-down(md){
+		.img-fluid{
+			max-width: 250px;
+		}
+	}
+	@include media-breakpoint-down(sm){
+		padding: 20px;
+	}
+}

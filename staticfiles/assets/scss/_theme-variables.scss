@@ -1,0 +1,8 @@
+:root{
+	--app-sidebar-bg: var(--bs-body-bg);
+	--app-header-bg: var(--bs-body-bg);
+}
+[data-bs-theme="dark"]{
+	--app-sidebar-bg: var(--bs-body-bg);
+	--app-header-bg: var(--bs-body-bg);
+}
