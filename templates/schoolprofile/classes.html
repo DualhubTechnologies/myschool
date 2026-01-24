@@ -18,7 +18,7 @@
 
     {% if messages %}
         {% for m in messages %}
-            <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
+            <div class="alert alert-{{ m.tags }} mt-2 flash-message">{{ m }}</div>
         {% endfor %}
     {% endif %}
 
@@ -41,7 +41,7 @@
     {{ c.name }}
 
     {% if c.assigned_subjects %}
-        <small class="text-primary fs-7" style="font-size: 0.75rem;">
+        <small class="text-primary fs-7" style="font-size: 0.55rem;">
             (
             {% for s in c.assigned_subjects %}
                 {{ s.subject.name }}{% if not forloop.last %}, {% endif %}

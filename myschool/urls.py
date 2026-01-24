@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', user_login, name='user_login'),
     path("accounts/", include("accounts.urls")),
+    path("calendar/", include("calendarapp.urls")),
     path("profile/", include("schoolprofile.urls")),
     path("teachers/", include("teachers.urls")),
     path("students/", include("students.urls")),

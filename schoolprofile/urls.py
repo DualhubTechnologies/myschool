@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import school_profile, edit_school_profile
+from .views import create_school_profile, school_profile, edit_school_profile
 from . import views
 from .views_subject import list_subjects, add_subject, edit_subject, delete_subject, assign_subjects_to_class
 
@@ -8,6 +8,7 @@ app_name = "profile"
 urlpatterns = [
     path("", school_profile, name="school_profile"),
     path("edit/", edit_school_profile, name="edit_school_profile"),
+    path("create/", create_school_profile, name="create_school_profile"),
 
         # ============================
     #          LEVELS

@@ -17,7 +17,7 @@
     <!-- FLASH MESSAGES -->
     {% if messages %}
         {% for m in messages %}
-            <div class="alert alert-{{ m.tags }} mt-2">{{ m }}</div>
+            <div class="alert alert-{{ m.tags }} mt-2 flash-message">{{ m }}</div>
         {% endfor %}
     {% endif %}
 

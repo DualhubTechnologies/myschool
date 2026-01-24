@@ -14,19 +14,33 @@ from .forms import SchoolProfileForm
 
 
 def school_profile(request):
-    user = request.user
-    profile, created = SchoolProfile.objects.get_or_create(id=1)
+    profile = SchoolProfile.objects.first()
 
-    return render(request, "schoolprofile/profile_view.html", {
-        "profile": profile,
-        "user": user,
-    })
+    if not profile:
+        return render(
+            request,
+            "schoolprofile/profile_view.html",
+            {
+                "profile": None,
+                "message": "No school profile has been created yet.",
+            }
+        )
 
+    return render(
+        request,
+        "schoolprofile/profile_view.html",
+        {
+            "profile": profile,
+        }
+    )
 
-
+@login_required
 def edit_school_profile(request):
-    profile, created = SchoolProfile.objects.get_or_create(id=1)
-    user = request.user
+    profile = SchoolProfile.objects.first()
+
+    if not profile:
+        messages.warning(request, "No school profile exists yet.")
+        return redirect("profile:create_school_profile")
 
     if request.method == "POST":
         form = SchoolProfileForm(request.POST, request.FILES, instance=profile)
@@ -37,13 +51,39 @@ def edit_school_profile(request):
     else:
         form = SchoolProfileForm(instance=profile)
 
-    return render(request, "schoolprofile/profile_edit.html", {
-        "form": form,
-        "user": user,
-        "profile": profile
-    })
+    return render(
+        request,
+        "schoolprofile/profile_edit.html",
+        {
+            "form": form,
+            "profile": profile,
+        }
+    )
 
 
+@login_required
+def create_school_profile(request):
+    # 🔒 BLOCK duplicates
+    if SchoolProfile.objects.exists():
+        messages.warning(request, "School profile already exists.")
+        return redirect("profile:school_profile")  # or edit page
+
+    if request.method == "POST":
+        form = SchoolProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "School profile created successfully.")
+            return redirect("profile:school_profile")
+    else:
+        form = SchoolProfileForm()
+
+    return render(
+        request,
+        "schoolprofile/profile_create.html",
+        {
+            "form": form,
+        }
+    )
 # =============================
 #          LEVELS
 # =============================

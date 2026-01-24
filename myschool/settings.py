@@ -68,6 +68,7 @@ user_APPS = [
     "students",
     "teachers",
     "schoolprofile",
+    "calendarapp",
 ]
 
 INSTALLED_APPS = SHARED_APPS + user_APPS
@@ -103,15 +104,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myschool.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 
 # Password validation
