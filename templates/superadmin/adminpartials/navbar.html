@@ -70,7 +70,7 @@
                   <ul class="list-group list-group-hover list-group-smooth list-group-unlined">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       <div class="avatar avatar-xs avatar-status-success rounded-circle me-1">
-                        <img src="{% static 'assets/images/avatar/avatar2.webp' %}" alt="">
+                        <img src="#" alt="">
                       </div>
                       <div class="ms-2 me-auto">
                         <h6 class="mb-0">Emma Smith</h6>
@@ -116,7 +116,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       <div class="avatar avatar-xs avatar-status-success rounded-circle me-1">
-                        <img src="{% static 'assets/images/avatar/avatar3.webp' %}" alt="">
+                        <img src="#" alt="">
                       </div>
                       <div class="ms-2 me-auto">
                         <h6 class="mb-0">Olivia Clark</h6>
@@ -126,7 +126,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       <div class="avatar avatar-xs avatar-status-danger rounded-circle me-1">
-                        <img src="{% static 'assets/images/avatar/avatar5.webp' %}" alt="">
+                        <img src="#" alt="">
                       </div>
                       <div class="ms-2 me-auto">
                         <h6 class="mb-0">Isabella Walker</h6>
@@ -165,7 +165,7 @@
       {% if request.user.profile.photo %}
         <img src="{{ request.user.profile.photo.url }}" alt="">
       {% else %}
-        <img src="{% static 'assets/images/avatar/avatar1.webp' %}" alt="">
+        <img src="#" alt="">
       {% endif %}
     </div>
   </a>
@@ -176,7 +176,7 @@
         {% if request.user.profile.photo %}
           <img src="{{ request.user.profile.photo.url }}" alt="">
         {% else %}
-          <img src="{% static 'assets/images/avatar/avatar1.webp' %}" alt="">
+          <img src="#" alt="">
         {% endif %}
       </div>
       <div class="ms-2">

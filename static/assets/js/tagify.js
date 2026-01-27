@@ -83,11 +83,7 @@ if (tagifyUsersList) {
 			dropdownItem: suggestionItemTemplate
 		},
 		whitelist: [
-			{ value: 1, name: "Sophia Hall", avatar: "assets/images/avatar/avatar1.webp", email: "sophia@example.com" },
-			{ value: 2, name: "Emma Smith", avatar: "assets/images/avatar/avatar2.webp", email: "emma@example.com" },
-			{ value: 3, name: "Olivia Clark", avatar: "assets/images/avatar/avatar3.webp", email: "olivia@example.com" },
-			{ value: 4, name: "Ava Lewis", avatar: "assets/images/avatar/avatar4.webp", email: "avalewis@example.com" },
-			{ value: 5, name: "Isabella Walker", avatar: "assets/images/avatar/avatar5.webp", email: "isabella@example.com" },
+
 		],
 
 		transformTag(tagData) {
