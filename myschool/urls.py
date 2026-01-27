@@ -4,6 +4,7 @@ from django.views.generic import RedirectView
 from accounts.views_auth import user_login
 from django.conf import settings
 from django.conf.urls.static import static
+from myschool.views import error_page
 
 
 urlpatterns = [
@@ -19,3 +20,9 @@ urlpatterns = [
 
 if settings.DEBUG:  
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler400 = lambda request, exception: error_page(request, exception, 400)
+handler403 = lambda request, exception: error_page(request, exception, 403)
+handler404 = lambda request, exception: error_page(request, exception, 404)
+handler500 = lambda request: error_page(request, None, 500)
