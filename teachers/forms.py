@@ -12,12 +12,12 @@ class StaffProfileForm(forms.ModelForm):
             "added_by",
             "created_at",
             "updated_at",
+            "job_title",
         )
 
         widgets = {
             "full_name": forms.TextInput(attrs={"class": "form-control"}),
             "employee_id": forms.TextInput(attrs={"class": "form-control"}),
-            "job_title": forms.TextInput(attrs={"class": "form-control"}),
             "department": forms.TextInput(attrs={"class": "form-control"}),
             "nationality": forms.TextInput(attrs={"class": "form-control"}),
             "phone": forms.TextInput(attrs={"class": "form-control"}),

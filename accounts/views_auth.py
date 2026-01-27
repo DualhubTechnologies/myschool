@@ -54,31 +54,35 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from accounts.forms import StyledAuthForm
 
-def user_login(request):
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
+def user_login(request):
     form = StyledAuthForm(request, data=request.POST or None)
 
     if request.method == "GET":
         return render(request, "auth/login.html", {"form": form})
 
     if form.is_valid():
-        email = form.cleaned_data["username"]
+        email = form.cleaned_data["username"]   # email lives here
         password = form.cleaned_data["password"]
 
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(
+            request,
+            username=email,   # 🔑 THIS WAS THE BUG
+            password=password
+        )
 
         if user is None:
             messages.error(request, "Invalid email or password.")
             return redirect("accounts:user_login")
 
-
         login(request, user)
 
-        # 🚨 FORCE PASSWORD CHANGE
+        # Force password change
         if user.must_change_password:
             return redirect("accounts:force_password_change")
 
         return redirect("accounts:user_dashboard")
 
     return render(request, "auth/login.html", {"form": form})
-

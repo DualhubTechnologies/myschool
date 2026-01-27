@@ -226,12 +226,8 @@ def get_student_info(request):
 
 def studentProfile(request, pk):
         student = get_object_or_404(Student.objects.select_related('school_class', 'stream'), pk=pk)
-        parents = student.parents.all()
-        invoice  = student.invoices.first()
         return render(request, 'students/studentProfile.html', {
                     'student': student,
-                    'parents': parents,
-                    'invoice': invoice ,
                     })
 
 def student_edit(request, pk):

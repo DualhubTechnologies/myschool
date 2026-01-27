@@ -12,8 +12,13 @@ from django.db.models import JSONField
 # ---------- Custom user manager ----------
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_active", True)
         if not email:
             raise ValueError("Users must have an email address")
+        
+        if not password:
+            raise ValueError("Password is required")
+        
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -30,14 +35,14 @@ class UserManager(BaseUserManager):
 # ---------- User ----------
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-
     email = models.EmailField(unique=True, db_index=True)
     full_name = models.CharField(max_length=255, blank=True)
     phone = models.CharField(max_length=32, blank=True)
     photo_url = models.URLField(blank=True, null=True)
+
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+
     last_login_at = models.DateTimeField(blank=True, null=True)
     metadata = JSONField(default=dict, blank=True)
     must_change_password = models.BooleanField(default=True)
@@ -54,6 +59,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         indexes = [
             models.Index(fields=["email"]),
         ]
+
+    def save(self, *args, **kwargs):
+        # Force is_active=True ONLY on creation
+        if self._state.adding:
+            self.is_active = True
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.full_name or self.email

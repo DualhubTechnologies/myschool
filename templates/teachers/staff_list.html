@@ -25,13 +25,12 @@
     <!-- Staff Table -->
     <div class="card shadow-sm">
         <div class="table-responsive">
-<table class="table display datatable">
+<table class="table display schltb">
                 <thead class="table-light">
                     <tr>
     <th></th>
     <th>Full Name</th>
     <th>Employee ID</th>
-    <th>Job Title</th>
     <th>Department</th>
     <th>Phone</th>
     <th>Employment Type</th>
@@ -46,7 +45,6 @@
         <td>{{ forloop.counter }}</td>
         <td>{{ staff.full_name }}</td>
         <td>{{ staff.employee_id }}</td>
-        <td>{{ staff.job_title }}</td>
         <td>{{ staff.department|default:"-" }}</td>
         <td>{{ staff.phone|default:"-" }}</td>
         <td>{{ staff.get_employment_type_display }}</td>
@@ -208,23 +206,5 @@
         </div>
     </div>
 </div>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    if (window.jQuery && $.fn.DataTable) {
-        $('.datatable').DataTable({
-            pageLength: 10,
-            lengthChange: true,
-            searching: true,
-            ordering: true,
-            responsive: true,
-            columnDefs: [
-                { orderable: false, targets: -1 } // Disable sorting on Actions
-            ]
-        });
-    }
-});
-</script>
 
 {% endblock %}

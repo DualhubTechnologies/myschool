@@ -1,7 +1,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     if (window.jQuery && $.fn.DataTable) {
         $('.schltb').DataTable({
-            pageLength: 10,
+            pageLength: 7,
             lengthChange: true,
             searching: true,
             ordering: true,
