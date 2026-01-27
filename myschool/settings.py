@@ -165,8 +165,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",   # REQUIRED
-        "NAME": "schoolsys_db",                          # Your database name
+        "ENGINE": "django.db.backends.postgresql",   
+        "NAME": "schoolsys_db",                          
         "USER": "postgres",
         "PASSWORD": "rdi123",
         "HOST": "localhost",
@@ -217,9 +217,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    }
+    },
 }
 
 
