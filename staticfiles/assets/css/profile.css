@@ -1,0 +1,109 @@
+/* ============================
+   Student Profile Page
+   ============================ */
+
+/* Page wrapper */
+.student-profile {
+    background-color: #f4f6fb;
+    padding: 2rem 0;
+    min-height: 100vh;
+}
+
+/* Cards */
+.student-profile .card {
+    border-radius: 14px;
+    border: none;
+    background: #ffffff;
+}
+
+/* Card headers */
+.student-profile .card-header {
+    background: transparent;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 1.25rem;
+}
+
+.student-profile .card-header h3,
+.student-profile .card-header h4 {
+    margin: 0;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Profile image */
+.profile_img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #e5e7eb;
+    margin-bottom: 10px;
+}
+
+/* Student name */
+.student-profile h3 {
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+/* Text inside cards */
+.student-profile p {
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+/* Tables */
+.student-profile table {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+.student-profile table th {
+    width: 35%;
+    background: #f9fafb;
+    font-weight: 600;
+    color: #111827;
+}
+
+.student-profile table td {
+    color: #374151;
+}
+
+/* Academic performance table header */
+.student-profile thead th {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+/* List styles */
+.student-profile ul {
+    padding-left: 1.2rem;
+    margin-bottom: 0;
+}
+
+.student-profile ul li {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+/* Section spacing */
+.student-profile .card + .card {
+    margin-top: 1rem;
+}
+
+/* Subtle shadow */
+.student-profile .shadow-sm {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .profile_img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .student-profile h3 {
+        font-size: 1.1rem;
+    }
+}
