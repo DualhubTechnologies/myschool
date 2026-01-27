@@ -1,0 +1,33 @@
+@each $color, $value in $theme-colors {
+	.check-#{$color}{
+		&:checked{
+			background-color: var(--bs-#{$color});
+			border-color: var(--bs-#{$color});
+		}
+		&:focus{
+			border-color: var(--bs-#{$color});
+		}
+	}
+	.switch-#{$color}{
+		&:checked{
+			background-color: var(--bs-#{$color});
+			border-color: var(--bs-#{$color});
+		}
+		&:focus{
+			border-color: var(--bs-#{$color});
+		}
+	}
+}
+
+.was-validated .form-control:invalid, .form-control.is-invalid,
+.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus,
+.was-validated .form-select:invalid,
+.form-select.is-invalid{
+    box-shadow: 0 0 0 1px var(--bs-danger);
+}
+.was-validated .form-control:valid, .form-control.is-valid,
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus,
+.was-validated .form-select:valid,
+.form-select.is-valid{
+    box-shadow: 0 0 0 1px var(--bs-success);
+}

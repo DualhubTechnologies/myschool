@@ -1,0 +1,25 @@
+.badge{
+	line-height: 1.5;
+    block-size: 26px;
+    min-inline-size: 26px;
+    padding: 5px 10px;
+}
+.badge-sm{
+	font-size: 11px;
+    line-height: 1.31;
+    padding: 3px 8px;
+    block-size: 20px;
+    min-inline-size: 20px;
+    font-weight: 700;
+	
+	&.rounded-pill{
+		padding: 3px;
+	}
+}
+.badge-lg{
+	font-size: 13px;
+    line-height: 1.231;
+    block-size: 32px;
+    min-inline-size: 32px;
+    padding: 8px 12px;
+}

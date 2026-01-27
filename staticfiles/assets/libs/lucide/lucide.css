@@ -5,7 +5,6 @@
   url("lucide.woff2?t=1734687594441") format("woff2"),
   url("lucide.woff?t=1734687594441") format("woff"),
   url('lucide.ttf?t=1734687594441') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('lucide.svg?t=1734687594441#lucide') format('svg'); /* iOS 4.1- */
 }
 
 [class^="icon-"], [class*=" icon-"] {
