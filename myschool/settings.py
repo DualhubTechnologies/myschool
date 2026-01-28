@@ -225,30 +225,7 @@ STORAGES = {
     },
 }
 
-server {
-    listen 80;
-    server_name 10.35.100.207;
 
-    # MEDIA FILES
-    location /media/ {
-        alias /var/www/myschool/media/;
-        expires 30d;
-        access_log off;
-    }
-
-    # STATIC FILES
-    location /static/ {
-        alias /var/www/myschool/staticfiles/;
-        expires 30d;
-        access_log off;
-    }
-
-    # DJANGO APP
-    location / {
-        include proxy_params;
-        proxy_pass http://unix:/run/gunicorn-myschool.sock;
-    }
-}
 
 # Media (user uploads like photos/signatures)
 MEDIA_URL = "/media/"
