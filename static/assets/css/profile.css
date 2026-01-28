@@ -1,109 +1,132 @@
 /* ============================
-   Student Profile Page
+   Student Profile Page (Scoped)
    ============================ */
 
 /* Page wrapper */
 .student-profile {
     background-color: #f4f6fb;
-    padding: 2rem 0;
-    min-height: 100vh;
+    padding: 1.5rem 0;
+}
+
+/* Bootstrap container override (safe) */
+.student-profile .container {
+    max-width: 1200px;
 }
 
 /* Cards */
 .student-profile .card {
-    border-radius: 14px;
     border: none;
-    background: #ffffff;
+    border-radius: 14px;
+    background-color: #ffffff;
 }
 
 /* Card headers */
 .student-profile .card-header {
     background: transparent;
     border-bottom: 1px solid #e5e7eb;
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.25rem;
 }
 
 .student-profile .card-header h3,
 .student-profile .card-header h4 {
     margin: 0;
     font-weight: 600;
+    font-size: 1.05rem;
     color: #1f2937;
 }
 
 /* Profile image */
 .profile_img {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid #e5e7eb;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
 }
 
 /* Student name */
 .student-profile h3 {
-    font-size: 1.25rem;
-    margin-top: 0.5rem;
+    font-size: 1.15rem;
+    margin-top: 0.25rem;
 }
 
 /* Text inside cards */
 .student-profile p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #374151;
+    margin-bottom: 0.25rem;
 }
 
 /* Tables */
 .student-profile table {
     margin-bottom: 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .student-profile table th {
     width: 35%;
-    background: #f9fafb;
+    background-color: #f9fafb;
     font-weight: 600;
     color: #111827;
+    padding: 0.55rem;
 }
 
 .student-profile table td {
+    padding: 0.55rem;
     color: #374151;
 }
 
 /* Academic performance table header */
 .student-profile thead th {
-    background: #f3f4f6;
+    background-color: #f3f4f6;
     color: #111827;
 }
 
 /* List styles */
 .student-profile ul {
-    padding-left: 1.2rem;
+    padding-left: 1.1rem;
     margin-bottom: 0;
 }
 
 .student-profile ul li {
-    font-size: 0.9rem;
-    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
 }
 
-/* Section spacing */
+/* Card spacing */
 .student-profile .card + .card {
-    margin-top: 1rem;
+    margin-top: 0.9rem;
 }
 
-/* Subtle shadow */
+/* Shadow (subtle, dashboard-friendly) */
 .student-profile .shadow-sm {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Reduce vertical whitespace in dashboard */
+.student-profile .card-body {
+    padding: 0.9rem 1.25rem;
 }
 
 /* Responsive tweaks */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .profile_img {
         width: 100px;
         height: 100px;
     }
 
     .student-profile h3 {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student-profile {
+        padding: 1rem 0;
+    }
+
+    .student-profile table th {
+        width: 45%;
     }
 }
