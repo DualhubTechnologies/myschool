@@ -6,6 +6,8 @@ from django.db import transaction
 from teachers.models import StaffProfile, TeacherSubject
 from schoolprofile.models import Subject
 from accounts.models import Role, UserRole
+from django.conf import settings
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -145,6 +147,32 @@ def staff_accounts_page(request):
 
                 staff.user = target_user
                 staff.save(update_fields=["user"])
+
+                # 5. Send email with account details
+                
+
+                subject = "Your Schoolsys Account Has Been Created"
+
+                message = (
+                    "Hello,\n\n"
+                    "Your Schoolsys account has been successfully created.\n\n"
+                    "Please use the link below to log in to the system:\n\n"
+                    f"👉 Press here to login: {settings.CUSTOM_LOGIN_URL}\n\n"
+                    "Login details:\n"
+                    f"Email: {email}\n"
+                    f"Temporary Password: {password}\n\n"
+                    "You will be required to change your password upon your first login.\n\n"
+                    "Regards,\n"
+                    "The Schoolsys Team"
+                )
+
+                send_mail(
+                    subject,
+                    message,
+                    None,              # Uses DEFAULT_FROM_EMAIL
+                    [email],
+                    fail_silently=False,
+                )
 
             # ---------------------------
             # ASSIGN ROLE
