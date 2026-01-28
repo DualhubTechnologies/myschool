@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from ast import alias
+
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,10 +156,6 @@ USE_TZ = True
 
 
 
-# Media (user uploads like photos/signatures)
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
 
 # ------------------------------
 # DATABASE — MUST BE POSTGRES
@@ -215,15 +213,47 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": BASE_DIR / "media",
+        },
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+server {
+    listen 80;
+    server_name 10.35.100.207;
+
+    # MEDIA FILES
+    location /media/ {
+        alias /var/www/myschool/media/;
+        expires 30d;
+        access_log off;
+    }
+
+    # STATIC FILES
+    location /static/ {
+        alias /var/www/myschool/staticfiles/;
+        expires 30d;
+        access_log off;
+    }
+
+    # DJANGO APP
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn-myschool.sock;
+    }
+}
+
+# Media (user uploads like photos/signatures)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 LANGUAGE_CODE = "en-us"
