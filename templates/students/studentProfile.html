@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/profile.css' %}">
 
 {% endblock %}
 
@@ -36,7 +36,7 @@
 
    
                   </div>
-                </div>
+                
 
                 <!-- Guardian Details -->
                 <div class="card shadow-sm mt-3">
@@ -55,12 +55,13 @@
                     {% endfor %}
                   </div>
                 </div>
+                </div>
               </div>
 
               <div class="col-lg-8">
                 <!-- General Information -->
                 <div class="card shadow-sm">
-                  <div class="card-header bg-transparent border-0">
+                  <div class="card-header bg-transparent">
                     <h3 class="mb-0">General Information</h3>
                   </div>
                   <div class="card-body pt-0">
@@ -74,9 +75,6 @@
                       <tr><th>Date Of Enrollment</th><td>{{ student.enrollment_date }}</td></tr>
                     </table>
                   </div>
-                </div>
-
-                                <div class="card shadow-sm mt-3">
                   <div class="card-header bg-transparent border-0">
                     <h3 class="mb-0">Fees Details</h3>
                   </div>
@@ -93,10 +91,14 @@
                         <p>No invoice available for this student.</p>
                         {% endif %}
                   </div>
-                </div>
+
+
+              
+
+  
            
                 <!-- Academic Performance -->
-                <div class="card shadow-sm mt-3">
+         
                   <div class="card-header bg-transparent border-0">
                     <h3 class="mb-0">Academic Performance</h3>
                   </div>
@@ -119,10 +121,10 @@
                       </tbody>
                     </table>
                   </div>
-                </div>
+                
 
                 <!-- Attendance -->
-                <div class="card shadow-sm mt-3">
+
                   <div class="card-header bg-transparent border-0">
                     <h3 class="mb-0">Attendance Record</h3>
                   </div>
@@ -131,10 +133,10 @@
                     <p><strong>Days Present:</strong> 210</p>
                     <p><strong>Attendance %:</strong> 95%</p>
                   </div>
-                </div>
+              
 
                 <!-- Extra Curricular -->
-                <div class="card shadow-sm mt-3">
+          
                   <div class="card-header bg-transparent border-0">
                     <h3 class="mb-0">Extracurricular Activities</h3>
                   </div>
@@ -145,27 +147,26 @@
                       <li>Debate Competition Winner 2024</li>
                     </ul>
                   </div>
-                </div>
+            
 
                 <!-- Remarks -->
-                <div class="card shadow-sm mt-3">
+          
                   <div class="card-header bg-transparent border-0">
                     <h3 class="mb-0">Teacher’s Remark</h3>
                   </div>
                   <div class="card-body pt-0">
                     <p>Very dedicated student with excellent academic and leadership qualities.</p>
                   </div>
-                </div>
+            
 
-                <div class="card shadow-sm mt-3">
+       
                   <div class="card-header bg-transparent border-0">
                     <h3 class="mb-0">Principal’s Remark</h3>
                   </div>
                   <div class="card-body pt-0">
                     <p>Promoted to Class 5. Keep up the good work.</p>
                   </div>
-                </div>
-
+            
               </div> <!-- end col-lg-8 -->
             </div>
           </div>

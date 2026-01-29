@@ -1,0 +1,164 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Student{% endblock %}
+
+{% block layout %}
+<div class="container-xl">
+
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h4 class="mb-0">
+        <i class="ti ti-edit"></i>
+        Edit Student – {{ student.first_name }} {{ student.other_names }}
+      </h4>
+    </div>
+
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row g-3">
+
+          <div class="col-md-4">
+            <label class="form-label">Admission Number</label>
+            {{ form.admission_number }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">LIN</label>
+            {{ form.Lin }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">SchoolPay Code</label>
+            {{ form.schoolpay_code }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">First Name</label>
+            {{ form.first_name }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Last Name</label>
+            {{ form.last_name }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Other Names</label>
+            {{ form.other_names }}
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Gender</label>
+            {{ form.gender }}
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Date of Birth</label>
+            {{ form.date_of_birth }}
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Status</label>
+            {{ form.status }}
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Student Type</label>
+            {{ form.student_type }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Level</label>
+            {{ form.level }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Class</label>
+            {{ form.school_class }}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Stream</label>
+            {{ form.stream }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Parent / Guardian</label>
+            {{ form.parent_name }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Parent Contact</label>
+            {{ form.parent_contact }}
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label">Address</label>
+            {{ form.address }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">UCE Index Number</label>
+            {{ form.uce_index_number }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">UACE Index Number</label>
+            {{ form.uace_index_number }}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Photo</label>
+            {{ form.photo }}
+            {% if student.photo %}
+              <div class="mt-2">
+                <img src="{{ student.photo.url }}" width="100" class="rounded">
+              </div>
+            {% endif %}
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <a href="{% url 'students:student_profile' student.id %}"
+             class="btn btn-secondary">
+            Cancel
+          </a>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="ti ti-device-floppy"></i> Save Changes
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+document.getElementById('id_school_class').addEventListener('change', function () {
+    const classId = this.value;
+    const streamSelect = document.getElementById('id_stream');
+
+    streamSelect.innerHTML = '<option value="">Loading...</option>';
+
+    fetch(`/students/load-streams/?school_class=${classId}`)
+        .then(response => response.json())
+        .then(data => {
+            streamSelect.innerHTML = '<option value="">Select Stream</option>';
+            data.forEach(stream => {
+                const option = document.createElement('option');
+                option.value = stream.id;
+                option.textContent = stream.name;
+                streamSelect.appendChild(option);
+            });
+        });
+});
+</script>
+{% endblock %}

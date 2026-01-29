@@ -95,17 +95,23 @@ def student_list(request):
     return JsonResponse(data, safe=False)
 
 
-def edit_student(request, id):
-    student = get_object_or_404(Student, id=id)
+def edit_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+
     if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
+        form = StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
-            return redirect('students:studentDetails')  # Redirect to the student list after saving
+            return redirect('students:student_profile', pk=student.pk)
     else:
         form = StudentForm(instance=student)
-    
-    return render(request, 'edit_student.html', {'form': form, 'student': student})
+
+    return render(request, 'students/student_form.html', {
+        'form': form,
+        'student': student,
+        'is_edit': True
+    })
+
 
 # Delete Student View
 def delete_student(request, id):
@@ -237,7 +243,7 @@ def student_edit(request, pk):
         form = StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
-            return redirect('student_detail', pk=student.pk)
+            return redirect('students:studentDetails')
     else:
         form = StudentForm(instance=student)
 
@@ -247,5 +253,5 @@ def student_edit(request, pk):
 def student_delete(request, pk):
     student = get_object_or_404(Student, pk=pk)
     student.delete()
-    return redirect('student_list')
+    return redirect('students:studentDetails')
 

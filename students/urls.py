@@ -12,7 +12,7 @@ urlpatterns = [
     path('add/', addstudent, name='addstudent'),
     path('studentDetails/', studentDetails, name='studentDetails'),
     path('list/', student_list, name='list'),
-    path('edit_student/<int:id>/', edit_student, name='edit_student'),
+    path('students/<int:pk>/edit/', student_edit, name='student_edit'),
     path('delete_student/<int:id>/', delete_student, name='delete_student'),
 
     path('edit_parent/<int:id>/', edit_student, name='edit_parent'),
