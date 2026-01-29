@@ -99,18 +99,19 @@
 
             <!-- PHOTO -->
             <td class="text-center" style="width:60px;">
-                {% if student.photo %}
+                {% if student.photo and student.photo.name != 'assets/images/default_student_photo.png' %}
                     <img src="{{ student.photo.url }}"
-                         alt="Student Photo"
-                         class="rounded-circle object-fit-cover"
-                         style="width:45px;height:45px;">
+                        alt="Student Photo"
+                        class="rounded-circle object-fit-cover"
+                        style="width:45px;height:45px;">
                 {% else %}
-                    <img src="{% static 'default_student_photo.png' %}"
-                         alt="Default Photo"
-                         class="rounded-circle object-fit-cover"
-                         style="width:45px;height:45px;">
+                    <img src="{% static 'assets/images/default_student_photo.png' %}"
+                        alt="Default Photo"
+                        class="rounded-circle object-fit-cover"
+                        style="width:45px;height:45px;">
                 {% endif %}
             </td>
+
 
             <!-- NAME -->
             <td>

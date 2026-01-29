@@ -45,7 +45,7 @@ class Student(models.Model):
         upload_to='student_photos/',
         blank=True,
         null=True,
-        default='student_photos/default.png',
+        default='assets/images/default_student_photo.png',
         help_text="Upload a student photo"
     )
 
