@@ -8,6 +8,8 @@ from django.contrib import messages
 from .excel import import_students_from_excel
 from django.views.decorators.http import require_POST
 from django_currentuser.middleware import _set_current_user
+from django.core.paginator import Paginator
+
 
 app_name = "students"
 
@@ -26,16 +28,14 @@ def addstudent(request):
         form = StudentForm()
     return render(request, 'students/addstudent.html', {'form': form})
 
-def studentDetails(request):
-        students = Student.objects.select_related('school_class', 'stream').all()
-        return render(request, 'students/studentlist.html', {'students': students})
+# def studentDetails(request):
+#         students = Student.objects.select_related('school_class', 'stream').all()
+#         return render(request, 'students/studentlist.html', {'students': students})
 
 
 def studentDetails(request):
-    # Start with a base queryset
-    students = Student.objects.select_related('school_class', 'stream')
+    students = Student.objects.select_related('school_class', 'stream').order_by('-id')
 
-    # Get filter values from GET parameters
     filters = {
         'school_class': request.GET.get('school_class', ''),
         'stream': request.GET.get('stream', ''),
@@ -43,30 +43,34 @@ def studentDetails(request):
         'status': request.GET.get('status', '')
     }
 
-    # Apply filters based on provided criteria, but ignore 'All' option
     if filters['school_class'] and filters['school_class'] != 'all':
         students = students.filter(school_class__name=filters['school_class'])
+
     if filters['stream'] and filters['stream'] != 'all':
         students = students.filter(stream__name=filters['stream'])
+
     if filters['section'] and filters['section'] != 'all':
-        students = students.filter(section=filters['section'])
+        students = students.filter(student_type=filters['section'])
+
     if filters['status'] and filters['status'] != 'all':
         students = students.filter(status=filters['status'])
 
+    # 🔹 PAGINATION
+    paginator = Paginator(students, 100)  # 10 students per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-
-    # Get available classes and streams for the dropdowns
     school_classes = SchoolClass.objects.all()
-    streams = Stream.objects.all().distinct()
-
-    unique_streams = streams.values('name').distinct()
+    unique_streams = Stream.objects.values('name').distinct()
 
     return render(request, 'students/studentlist.html', {
-        'students': students,
+        'students': page_obj,     # IMPORTANT
+        'page_obj': page_obj,
         'school_classes': school_classes,
         'streams': unique_streams,
-        'filters': filters,  # Pass filters back to the template to maintain selection state
+        'filters': filters,
     })
+
     
 def student_list(request):
     qs = Student.objects.select_related('school_class', 'stream') \
@@ -131,7 +135,7 @@ def EnrolmentSummary(request):
         'total_enrolment':    active_qs.count(),
         'male_count':         active_qs.filter(gender='male').count(),
         'female_count':       active_qs.filter(gender='female').count(),
-        'boarding_count':     active_qs.filter(section='boarding').count(),
+        'boarding_count':     active_qs.filter(student_type='BOARDING').count(),
     }
     return render(request, 'students/Enrolmentsummary.html', context)
 

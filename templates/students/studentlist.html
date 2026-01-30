@@ -34,11 +34,19 @@
         </select>
       </div>
       <div class="col-md-2 mb-3">
-        <select name="section" class="form-control shadow-sm py-2">
-          <option value="all">All Sections</option>
-          <option value="boarding" {% if request.GET.section == 'boarding' %}selected{% endif %}>Boarding</option>
-          <option value="day" {% if request.GET.section == 'day' %}selected{% endif %}>Day</option>
-        </select>
+      <select name="section" class="form-control shadow-sm py-2">
+        <option value="all">All Sections</option>
+
+        <option value="BOARDING"
+          {% if request.GET.section == 'BOARDING' %}selected{% endif %}>
+          Boarding
+        </option>
+
+        <option value="DAY"
+          {% if request.GET.section == 'DAY' %}selected{% endif %}>
+          Day
+        </option>
+      </select>
       </div>
       <div class="col-md-2 mb-3">
         <select name="status" class="form-control shadow-sm py-2">
