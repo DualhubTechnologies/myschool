@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from .models import (
      User, Role, Permission, RolePermission,
-    UserRole, Invite, Session, AuditLog
+    UserRole, Invite, Session
 )
 
 
@@ -40,7 +40,7 @@ class UserAdmin(DjangoUserAdmin):
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
     list_display = ("name", "created_at")
-    search_fields = ("name","")
+    search_fields = ("name", )
 
 
 # --- Permissions ---
@@ -71,13 +71,7 @@ class UserRoleAdmin(admin.ModelAdmin):
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
     list_display = ("user", "ip_address", "created_at", "last_seen_at")
-    list_select_related = ("user", "")
+    list_select_related = ("user",  )
 
 
-# --- Audit Log ---
-@admin.register(AuditLog)
-class AuditLogAdmin(admin.ModelAdmin):
-    list_display = ("action", "actor", "created_at")
-    search_fields = ("action", "actor__email")
-    readonly_fields = ("before", "after", "actor", "action", "created_at")
-    list_select_related = ("actor","")
+

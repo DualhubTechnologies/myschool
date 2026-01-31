@@ -31,31 +31,11 @@ LOGGING = {
 ALLOWED_HOSTS = ['*']
 
 
-# Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'django_users',            # for multi-tenancy
-    'accounts',
-    'schoolprofile',
-    'teachers',
-    'students',
-
-]
-
-
-
-
 SHARED_APPS = [
     'widget_tweaks',
     'django_currentuser',
     "accounts",                  # Custom User + Role models
+    
 
     # Django default shared apps — stay in public schema:
     "django.contrib.contenttypes",
@@ -64,6 +44,7 @@ SHARED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
+   
 ]
 
 user_APPS = [
@@ -72,6 +53,7 @@ user_APPS = [
     "teachers",
     "schoolprofile",
     "calendarapp",
+     "auditlog.apps.AuditlogConfig",
 ]
 
 INSTALLED_APPS = SHARED_APPS + user_APPS
@@ -86,6 +68,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "auditlog.middleware.CurrentRequestMiddleware",
+    # ... your existing middleware ...
+    "auditlog.middleware.ActivityLogMiddleware",
 ]
 
 ROOT_URLCONF = 'myschool.urls'

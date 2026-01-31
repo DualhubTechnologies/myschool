@@ -208,25 +208,3 @@ class Session(models.Model):
         self.save(update_fields=["revoked_at"])
 
 
-# ---------- Audit Log ----------
-class AuditLog(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    actor = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, blank=True,
-        on_delete=models.SET_NULL
-    )
-
-    action = models.CharField(max_length=255)
-    object_type = models.CharField(max_length=150, null=True, blank=True)
-    object_id = models.CharField(max_length=255, null=True, blank=True)
-
-    before = JSONField(null=True, blank=True)
-    after = JSONField(null=True, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        indexes = [
-            models.Index(fields=["action", "created_at"])
-        ]

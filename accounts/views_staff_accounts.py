@@ -194,10 +194,7 @@ def staff_accounts_page(request):
                     TeacherSubject(staff=staff, subject_id=sid)
                     for sid in subject_ids
                 ])
-        printedpass = f'Created/Updated user:{target_user.email} with password:{password}'
-        print(target_user.password)
-        print(target_user.check_password(password))
-        print(printedpass)
+
 
         return redirect("accounts:staff_accounts_page")
 
